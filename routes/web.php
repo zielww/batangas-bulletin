@@ -14,8 +14,7 @@ Route::get('/', BlogController::class);
 Route::get('/article/{slug}', ArticleController::class);
 Route::get('/category/{slug}', CategoryController::class);
 Route::post('/article/{article}/comment', CommentController::class);
-Route::get('/author/{id}', [UserController::class], 'authors');
-
+Route::get('/author/{id}', [UserController::class, 'authors']);
 
 Route::middleware('auth')->group(function () {
     Route::delete('/logout', [SessionController::class, 'destroy']);

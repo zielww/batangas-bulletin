@@ -27,8 +27,8 @@ class BlogSeeder extends Seeder
 
         // Create additional users
         $users = [
-            ['name' => 'John Editor', 'email' => 'editor@blog.com', 'email_verified_at' => now()],
-            ['name' => 'Jane Writer', 'email' => 'writer@blog.com', 'email_verified_at' => now()],
+            ['name' => 'John Editor', 'about' => 'Great writer' , 'email' => 'editor@blog.com', 'email_verified_at' => now()],
+            ['name' => 'Jane Writer', 'about' => 'Okay writer' , 'email' => 'writer@blog.com', 'email_verified_at' => now()],
         ];
 
         foreach ($users as $userData) {
