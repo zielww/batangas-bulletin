@@ -49,22 +49,28 @@
             <!-- Technology Articles Section -->
             <div class="lg:col-span-3">
                 <!-- Featured Tech Article -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 border border-gray-100">
-                    <div class="relative">
-                        <img src="https://picsum.photos/seed/{{rand(1000,10000)}}/800/300" alt="Featured Tech Article" class="w-full h-64 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                            <h2 class="text-2xl md:text-3xl font-bold text-white mb-2"><a href="{{ url('/article', [$featuredArticle[0]->slug]) }}">{{ $featuredArticle[0]->title }}</a></h2>
-                            <p class="text-gray-200 mb-3">{{ $featuredArticle[0]->excerpt }}</p>
-                            <div class="flex items-center text-gray-300 text-sm">
-                                <span>{{ $featuredArticle[0]->user->name }}</span>
-                                <span class="mx-2">•</span>
-                                <span>{{ $featuredArticle[0]->published_at->format('F d, Y') }}</span>
-                                <span class="mx-2">•</span>
-                                <span>{{ rand(5, 20) }} min read</span>
+                @if(count($featuredArticle) > 0)
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8 border border-gray-100">
+                        <div class="relative">
+                            <img src="https://picsum.photos/seed/{{rand(1000,10000)}}/800/300" alt="Featured Tech Article" class="w-full h-64 object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                                <h2 class="text-2xl md:text-3xl font-bold text-white mb-2"><a href="{{ url('/article', [$featuredArticle[0]->slug]) }}">{{ $featuredArticle[0]->title }}</a></h2>
+                                <p class="text-gray-200 mb-3">{{ $featuredArticle[0]->excerpt }}</p>
+                                <div class="flex items-center text-gray-300 text-sm">
+                                    <span>{{ $featuredArticle[0]->user->name }}</span>
+                                    <span class="mx-2">•</span>
+                                    <span>{{ $featuredArticle[0]->published_at->format('F d, Y') }}</span>
+                                    <span class="mx-2">•</span>
+                                    <span>{{ rand(5, 20) }} min read</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    <div>
+                        <h1 class="font-bold">Unfortunately, There are no articles related to {{ $category->name }} as of the moment.</h1>
+                    </div>
+                @endif
 
                 <!-- Tech Articles Grid -->
                 <div class="space-y-6">
@@ -125,7 +131,7 @@
 
                     <!-- Trending in Tech -->
                     <div class="bg-white rounded-2xl p-6 shadow-md border border-gray-100">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Trending in Tech</h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4">Trending in {{ $category->name }}</h3>
                         <div class="space-y-3">
                             @foreach($trendingArticles as $index=>$article)
                                 <div class="flex items-center">

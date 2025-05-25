@@ -2,13 +2,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             <div class="flex-shrink-0">
-                <a href="{{ route('blog.index') }}" class="text-2xl font-bold text-primary">Batangas Bulletin</a>
+                <a href="/" class="text-2xl font-bold text-primary">Batangas Bulletin</a>
             </div>
 
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                     @foreach(\App\Models\Category::all() as $category)
-                        <a href="{{ route('blog.category', $category->slug) }}"
+                        <a href="{{ url('/category', [$category->slug]) }}"
                            class="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
                             {{ $category->name }}
                         </a>
@@ -42,7 +42,7 @@
     <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
         <div class="px-2 pt-2 pb-3 space-y-1">
             @foreach(\App\Models\Category::all() as $category)
-                <a href="{{ route('blog.category', $category->slug) }}"
+                <a href="{{ url('/category', [$category->slug]) }}"
                    class="text-gray-600 hover:text-primary block px-3 py-2 text-base font-medium">
                     {{ $category->name }}
                 </a>

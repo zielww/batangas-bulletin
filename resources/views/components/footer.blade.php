@@ -12,7 +12,7 @@
                 <ul class="space-y-2">
                     @foreach(\App\Models\Category::all() as $category)
                         <li>
-                            <a href="{{ route('blog.category', $category->slug) }}"
+                            <a href="{{ url('/category', [$category->slug]) }}"
                                class="text-gray-400 hover:text-white">
                                 {{ $category->name }}
                             </a>
@@ -21,10 +21,10 @@
                 </ul>
             </div>
 
-            <div>
+            <div>   
                 <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                 <ul class="space-y-2">
-                    <li><a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-white">Home</a></li>
+                    <li><a href="/" class="text-gray-400 hover:text-white">Home</a></li>
                 </ul>
             </div>
         </div>

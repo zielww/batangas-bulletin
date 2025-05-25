@@ -58,7 +58,7 @@
                                 <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/48" alt="{{ $article->user->name }}" class="w-12 h-12 rounded-full mr-4">
                                 <div>
                                     <h3 class="font-semibold text-gray-900">
-                                        <a href="{{ url('/author', [$article->name]) }}" class="hover:text-primary">{{ $article->user->name }}</a>
+                                        <a href="{{ url('/author', [($article->user->id)]) }}" class="hover:text-primary">{{ $article->user->name }}</a>
                                     </h3>
                                     <p class="text-sm text-gray-500">{{ $article->user->email }}</p>
                                 </div>
