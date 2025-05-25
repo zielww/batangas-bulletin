@@ -26,7 +26,7 @@
                         <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/800/400" alt="Featured Article" class="w-full h-64 object-cover">
                         <div class="p-6">
                             <div class="flex items-center mb-2">
-                                <span class="bg-[{{ $article->category->color }}] text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
+                                <span style="background-color: {{ $article->category->color }}" class="text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
                                 <span class="text-gray-500 text-sm ml-2">{{ $article->published_at->format('F d, Y H:i A') }}</span>
                             </div>
                             <h1 class="text-2xl font-bold text-gray-900 mb-3 hover:text-primary cursor-pointer">
@@ -54,7 +54,7 @@
                                 <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/400/200" alt="News" class="w-full h-48 object-cover">
                                 <div class="p-4">
                                     <div class="flex items-center mb-2">
-                                        <span class="bg-[{{ $article->category->color }}] text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
+                                        <span style="background-color: {{ $article->category->color }}" class=" text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
                                         <span class="text-gray-500 text-sm ml-2">{{ $article->published_at->format('H:i A F d, Y') }}</span>
                                     </div>
                                     <h3 class="text-lg font-semibold text-gray-900 mb-2 hover:text-primary cursor-pointer">
@@ -96,6 +96,19 @@
                         @endforeach
                     </div>
                 </div>
+
+                <!-- Newsletter Signup -->
+                <div class="bg-primary text-white rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-2">Stay Updated</h3>
+                    <p class="text-blue-100 mb-4">Get the latest news delivered to your inbox</p>
+                    <form class="space-y-3">
+                        <input type="email" placeholder="Your email address" class="w-full px-4 py-2 rounded-lg text-white border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        <button type="submit" class="w-full bg-white text-primary px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+
 
                 <!-- Categories -->
                 <div class="bg-white rounded-lg shadow-md p-6">

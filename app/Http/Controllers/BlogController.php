@@ -78,7 +78,7 @@ class BlogController extends Controller
             ->where('status', 'published')
             ->where('category_id', $category->id)
             ->latest('published_at')
-            ->paginate(Setting::get('posts_per_page', 10));
+            ->paginate(5);
 
         // Featured article
         $featuredArticle = Article::with(['category', 'user'])

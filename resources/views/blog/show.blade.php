@@ -42,7 +42,7 @@
                     <!-- Article Header -->
                     <div class="p-6 border-b">
                         <div class="flex items-center mb-4">
-                            <span class="bg-[{{ $article->category->color }}] text-white px-3 py-1 rounded-full text-sm font-semibold">{{ $article->category->name }}</span>
+                            <span style="background-color: {{ $article->category->color }}" class="text-white px-3 py-1 rounded-full text-sm font-semibold">{{ $article->category->name }}</span>
                             <span class="text-gray-500 text-sm ml-3">Published on {{ $article->published_at->format('H:i A F d, Y') }}</span>
                         </div>
                         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -97,7 +97,7 @@
                         <div class="mt-8 pt-6 border-t">
                             <div class="flex flex-wrap gap-2 items-center">
                                 <span class="text-sm text-gray-500 mr-2">Category</span>
-                                <a href="{{ url('/category', [$article->category->name]) }}" class="bg-[{{ $article->category->color }}] text-white px-3 py-1 font-bold rounded-full text-sm hover:bg-gray-200">{{ $article->category->name }}</a>
+                                <a href="{{ url('/category', [$article->category->name]) }}" style="background-color: {{ $article->category->color }}" class=" text-white px-3 py-1 font-bold rounded-full text-sm hover:bg-gray-200">{{ $article->category->name }}</a>
                             </div>
                         </div>
                     </div>
