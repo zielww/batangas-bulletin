@@ -4,14 +4,14 @@
     <!-- Breaking News Banner -->
     <div class="bg-secondary text-white py-2">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center">
+            <a href="{{ url('/article', [$featuredArticles[0]->slug]) }}" class="flex items-center">
                 <span class="bg-white text-secondary px-2 py-1 rounded text-xs font-bold mr-3">BREAKING</span>
                 <div class="flex-1 overflow-hidden">
                     <div class="animate-pulse">
                         <span class="text-sm">Latest: {{ $featuredArticles[0]->excerpt }}</span>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -21,60 +21,65 @@
             <!-- Main Content Area -->
             <div class="lg:col-span-2">
                 <!-- Featured Article -->
-                @foreach($featuredArticles as $article)
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-                        <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/800/400" alt="Featured Article" class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <div class="flex items-center mb-2">
-                                <span style="background-color: {{ $article->category->color }}" class="text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
-                                <span class="text-gray-500 text-sm ml-2">{{ $article->published_at->format('F d, Y H:i A') }}</span>
-                            </div>
-                            <h1 class="text-2xl font-bold text-gray-900 mb-3 hover:text-primary cursor-pointer">
-                                <a href="{{ url('/article', [$article->slug]) }}">{{ $article->title }}</a>
-                            </h1>
-                            <p class="text-gray-600 mb-4">{{ $article->excerpt }}</p>
-                            <div class="flex items-center">
-                                <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/32" alt="Author" class="w-8 h-8 rounded-full mr-3">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">{{ $article->user->name }}</p>
-                                    <p class="text-xs text-gray-500">{{ $article->user->email }}</p>
+                @if (isset($search))
+
+                @else
+                    @foreach($featuredArticles as $article)
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+                            <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/800/400" alt="Featured Article" class="w-full h-64 object-cover">
+                            <div class="p-6">
+                                <div class="flex items-center mb-2">
+                                    <span style="background-color: {{ $article->category->color }}" class="text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
+                                    <span class="text-gray-500 text-sm ml-2">{{ $article->published_at->format('F d, Y H:i A') }}</span>
+                                </div>
+                                <h1 class="text-2xl font-bold text-gray-900 mb-3 hover:text-primary cursor-pointer">
+                                    <a href="{{ url('/article', [$article->slug]) }}">{{ $article->title }}</a>
+                                </h1>
+                                <p class="text-gray-600 mb-4">{{ $article->excerpt }}</p>
+                                <div class="flex items-center">
+                                    <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/32" alt="Author" class="w-8 h-8 rounded-full mr-3">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">{{ $article->user->name }}</p>
+                                        <p class="text-xs text-gray-500">{{ $article->user->email }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-
+                    @endforeach
+                @endif
 
                 <!-- Latest News Grid -->
                 <div class="mb-8">
                     <h2 class="text-2xl font-bold text-gray-900 mb-6">Latest News</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        @foreach($articles as $article)
-                            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                                <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/400/200" alt="News" class="w-full h-48 object-cover">
-                                <div class="p-4">
-                                    <div class="flex items-center mb-2">
-                                        <span style="background-color: {{ $article->category->color }}" class=" text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
-                                        <span class="text-gray-500 text-sm ml-2">{{ $article->published_at->format('H:i A F d, Y') }}</span>
+                @if(count($articles) > 0)
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            @foreach($articles as $article)
+                                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                                    <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/400/200" alt="News" class="w-full h-48 object-cover">
+                                    <div class="p-4">
+                                        <div class="flex items-center mb-2">
+                                            <span style="background-color: {{ $article->category->color }}" class=" text-white px-2 py-1 rounded text-xs font-semibold">{{ $article->category->name }}</span>
+                                            <span class="text-gray-500 text-sm ml-2">{{ $article->published_at->format('H:i A F d, Y') }}</span>
+                                        </div>
+                                        <h3 class="text-lg font-semibold text-gray-900 mb-2 hover:text-primary cursor-pointer">
+                                            <a href="{{ url('/article', [$article->slug]) }}">{{ $article->title }}</a>
+                                        </h3>
+                                        <p class="text-gray-600 text-sm mb-3">{{ $article->excerpt }}</p>
+                                        <div class="flex items-center">
+                                            <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/24" alt="Author" class="w-6 h-6 rounded-full mr-2">
+                                            <span class="text-xs text-gray-500">By {{ $article->user->name }}</span>
+                                        </div>
                                     </div>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2 hover:text-primary cursor-pointer">
-                                        <a href="{{ url('/article', [$article->slug]) }}">{{ $article->title }}</a>
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-3">{{ $article->excerpt }}</p>
-                                    <div class="flex items-center">
-                                        <img src="http://picsum.photos/seed/{{rand(1000,10000)}}/24" alt="Author" class="w-6 h-6 rounded-full mr-2">
-                                        <span class="text-xs text-gray-500">By {{ $article->user->name }}</span>
-                                    </div>
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
+                                </article>
+                            @endforeach
+                        </div>
+
+                @else
+                    <h1>Unable to find articles related to <b>"{{ $search }}</b>"</h1>
+                @endif
                 </div>
 
-                <!-- Load More Button -->
-                <div class="text-center">
-                   {{ $articles->links() }}
-                </div>
             </div>
 
             <!-- Sidebar -->

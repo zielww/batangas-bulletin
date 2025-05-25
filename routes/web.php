@@ -5,6 +5,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,7 @@ Route::get('/article/{slug}', ArticleController::class);
 Route::get('/category/{slug}', CategoryController::class);
 Route::post('/article/{article}/comment', CommentController::class);
 Route::get('/author/{id}', [UserController::class, 'authors']);
+Route::post('/search', SearchController::class);
 
 Route::middleware('auth')->group(function () {
     Route::delete('/logout', [SessionController::class, 'destroy']);
