@@ -107,22 +107,27 @@
                 <div class="bg-white rounded-lg shadow-lg mt-8 p-6">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6">Comments ({{ count($comments) }})</h3>
 
-                    <!-- Comment Form -->
-                    <div class="mb-8 p-4 bg-gray-50 rounded-lg">
-                        <h4 class="text-lg font-semibold mb-4">Leave a Comment</h4>
-                        <form action="/article/{{ $article->id }}/comment" method="POST" class="space-y-4">
-                            @csrf
-                            @method('POST')
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input type="text" name="author_name" placeholder="Your Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                <input type="email" name="author_email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <textarea rows="4" name="content" placeholder="Your comment..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-                            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                                Post Comment
-                            </button>
-                        </form>
-                    </div>
+                    @auth()
+                        <!-- Comment Form -->
+                        <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="text-lg font-semibold mb-4">Leave a Comment</h4>
+                            <form action="/article/{{ $article->id }}/comment" method="POST" class="space-y-4">
+                                @csrf
+                                @method('POST')
+                                <input type="hidden" value="{{ \Illuminate\Support\Facades\Auth::user()->name }}" name="author_name" placeholder="Your Name"
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="hidden" value="{{ \Illuminate\Support\Facades\Auth::user()->email }}" name="author_email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <textarea rows="4" name="content" placeholder="Your comment..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                                <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                    Post Comment
+                                </button>
+                            </form>
+                        </div>
+                    @endauth
+                    @guest()
+                        <h1 class="mb-8">Want to express your thoughts? <a href="/login" class="text-primary hover:underline">Sign in now</a></h1>
+                    @endguest
+
 
                     <!-- Comments List -->
                     <div class="space-y-6">
