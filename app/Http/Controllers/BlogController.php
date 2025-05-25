@@ -13,12 +13,20 @@ class BlogController extends Controller
 {
     public function index(): View
     {
+        // Normal Articles
         $articles = Article::with(['category', 'user'])
             ->where('status', 'published')
             ->latest('published_at')
-            ->paginate(Setting::get('posts_per_page', 10));
+            ->paginate(4);
 
+        // Featured articles
         $featuredArticles = Article::with(['category', 'user'])
+            ->where('status', 'published')
+            ->latest('published_at')
+            ->limit(1)
+            ->get();
+
+        $trendingNow = Article::with(['category', 'user'])
             ->where('status', 'published')
             ->latest('published_at')
             ->limit(3)
@@ -26,11 +34,12 @@ class BlogController extends Controller
 
         $categories = Category::withCount('articles')->get();
 
-        return view('blog.index', compact('articles', 'featuredArticles', 'categories'));
+        return view('blog.index', compact('articles', 'trendingNow', 'featuredArticles', 'categories'));
     }
 
     public function show(string $slug): View
     {
+        //Get the article to be shown
         $article = Article::with(['category', 'user', 'comments' => function($query) {
             $query->where('status', 'approved')->latest();
         }])
@@ -46,7 +55,19 @@ class BlogController extends Controller
             ->limit(3)
             ->get();
 
-        return view('blog.show', compact('article', 'relatedArticles'));
+        $trendingNow = Article::with(['category', 'user'])
+            ->where('status', 'published')
+            ->latest('published_at')
+            ->limit(3)
+            ->get();
+
+        $comments = Comment::with(['article'])
+            ->where('status', 'approved')
+            ->where('article_id', $article->id)
+            ->latest('created_at')
+            ->simplePaginate(3);
+
+        return view('blog.show', compact('article', 'trendingNow', 'comments', 'relatedArticles'));
     }
 
     public function category(string $slug): View
@@ -59,10 +80,24 @@ class BlogController extends Controller
             ->latest('published_at')
             ->paginate(Setting::get('posts_per_page', 10));
 
-        return view('blog.category', compact('articles', 'category'));
+        // Featured article
+        $featuredArticle = Article::with(['category', 'user'])
+            ->where('status', 'published')
+            ->latest('published_at')
+            ->limit(1)
+            ->get();
+
+        $trendingArticles = Article::with('category')
+            ->where('status', 'published')
+            ->where('category_id', $category->id)
+            ->latest('published_at')
+            ->limit(5)
+            ->get();
+
+        return view('blog.category', compact('articles','trendingArticles', 'featuredArticle', 'category'));
     }
 
-    public function storeComment(Request $request, Article $article)
+    public function storeComment(Request $request, $article)
     {
         if (!Setting::get('allow_comments', 'true')) {
             return back()->with('error', 'Comments are currently disabled.');
@@ -78,7 +113,7 @@ class BlogController extends Controller
             'content' => $request->content,
             'author_name' => $request->author_name,
             'author_email' => $request->author_email,
-            'article_id' => $article->id,
+            'article_id' => $article,
             'status' => Setting::get('moderate_comments', 'true') === 'true' ? 'pending' : 'approved',
         ]);
 
