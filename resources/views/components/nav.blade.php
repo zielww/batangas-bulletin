@@ -13,6 +13,12 @@
                             {{ $category->name }}
                         </a>
                     @endforeach
+                    @if (Auth::check() && Auth::user()->is_admin)
+                            <a href="/admin/login"
+                               class="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+                                Dashboard
+                            </a>
+                    @endif
                 </div>
             </div>
 
