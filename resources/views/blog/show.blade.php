@@ -18,7 +18,7 @@
                         </svg>
                     </li>
                     <li>
-                        <a href="{{ url('/category', [$article->slug]) }}" class="text-gray-500 hover:text-primary">{{ $article->category->name }}</a>
+                        <a href="{{ url('/category', [$article->category->slug]) }}" class="text-gray-500 hover:text-primary">{{ $article->category->name }}</a>
                     </li>
                     <li>
                         <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
